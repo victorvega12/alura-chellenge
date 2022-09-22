@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/Usuario/OneDrive/Escritorio/pruebas/lol.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width">
+        <title>encryter</title>
+        <link rel="stylesheet" href="./encryter_files/reset.css">
+        <link rel="stylesheet" href="./encryter_files/lol.css">
+     </head>
+     <body>
+        <header>
+            <img class="logo" src="./encryter_files/Logo.png">
+            <h1>encriptador de prueba</h1>
+        </header>
+        <main>
+            <div >
+               <label for="texto">ingrese texto para convertir</label>
+               <input class="caja1" type="text" id="texto">
+               <h3>@solo minusculas y sin caracteres especiales </h3>
+            </div>
+            <div>
+                <button class="en">encriptar</button> 
+                <button class="des">desencriptar</button> 
+            </div>
+            <div>
+                <p  class="caja2" id="final">     
+                </p>
+                <button class="copi" name="copi">copiar</button>
+            </div>
+        </main>
+        <footer>
+            <h2>@victor vega 
+                alura challenge 
+            </h2>
+        </footer>
+     
+
+
+<script type="text/javascript">
+    var encrip = new Map ();
+    encrip.set("e","enter");
+    encrip.set("i","imes");
+    encrip.set("a","ai");
+    encrip.set("o","ober");
+    encrip.set("u","ufat");
+
+    var descrip = new Map ();
+    descrip.set("e",4);
+    descrip.set("i",3);
+    descrip.set("a",1);
+    descrip.set("o",3);
+    descrip.set("u",3);
+
+
+    function escribir(TEXTO) {
+        document.getElementById("final").textContent = TEXTO
+    }
+    function ENCRIPTAR() { 
+        var texto = document.getElementById("texto")
+        var tra = ""
+        for (var ps = 0 ; ps < texto.value.length ; ps++) {
+            
+            if (encrip['has'](texto.value[ps].toLowerCase())) {
+                tra = tra + encrip['get'](texto.value[ps].toLowerCase())
+            }else{
+                tra = tra + texto.value[ps]
+            }
+        }
+        escribir(tra)
+    }
+    function DESENCRIPTAR(){
+        var texto = document.getElementById("texto")
+        var tra = ""                                                                                                                
+        for (var ps = 0 ; ps < texto.value.length ; ps++) {
+            if (descrip['has'](texto.value[ps].toLowerCase())) {
+                const regex1 = RegExp(encrip['get'](texto.value[ps].toLowerCase()), 'g');
+                const str1 = texto.value;
+                let array1;
+                var a = [];                                                                                                                            
+                while ((array1 = regex1.exec(str1)) !== null)                                                                                         
+                    a.push(regex1.lastIndex);                                                                                                                                                                
+                if (a.length == 1){
+                    if (ps == (a-descrip['get'](texto.value[ps].toLowerCase())-1)){
+                        tra = tra + texto.value[ps].toLowerCase()
+                        ps = ps + descrip['get'](texto.value[ps].toLowerCase()) 
+                    }else{
+                        tra = tra + texto.value[ps].toLowerCase() 
+                    }
+                }else if (a.length>1){
+                    for ( var xd = 0; xd < a.length;xd++){
+                        if (ps == (a[xd]-descrip['get'](texto.value[ps].toLowerCase())-1)){
+                            tra = tra + texto.value[ps].toLowerCase()
+                            ps = ps + descrip['get'](texto.value[ps].toLowerCase()) 
+ 
+                        }
+                    }        
+                }else{
+                    tra = tra + texto.value[ps].toLowerCase()  
+                }  
+            }else{
+                tra = tra + texto.value[ps].toLowerCase()
+            }
+        }
+        escribir(tra)  
+    }
+    function copiarAlPortapapeles() {
+        var enlace = document.getElementById("final");
+        var inputFalso = document.createElement("input");
+        inputFalso.setAttribute("value", enlace.innerHTML);
+        document.body.appendChild(inputFalso);
+        inputFalso.select();
+        document.execCommand("copy");
+        document.body.removeChild(inputFalso);
+        }
+    var botonen = document.querySelector(".en");
+    botonen.onclick = ENCRIPTAR;
+    var botondes = document.querySelector(".des");
+    botondes.onclick = DESENCRIPTAR;
+    var botonco = document.querySelector(".copi");
+    botonco.onclick = copiarAlPortapapeles;
+</script></body></html>
